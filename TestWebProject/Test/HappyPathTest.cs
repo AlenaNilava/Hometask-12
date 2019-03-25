@@ -74,37 +74,37 @@
         {
             User user = usercreator.Create(login, password);
 
-            //Login to the mail.ru
+            Logger.Logger.LogStep("Login to the mail.ru");
             HomePage homePage = new HomePage();
             InboxPage inboxPage = homePage.Login(user);
 
-            //Assert a user is logged in
+            Logger.Logger.LogStep("Assert a user is logged in");
             Assert.IsTrue(inboxPage.IsSucessfullyLoggedIn(), "User is not logged in");
 
-            //Create a new mail 
+            Logger.Logger.LogStep("Create a new mail");
             EmailPage emailPage = inboxPage.ClickCreateNewMessageButton();
             email = new DraftEmail(email);
 
-            //Send the mail
+            Logger.Logger.LogStep("Send the mail");
             emailPage.ClickSendEmailButton();
 
-            //Navigate to SentPage
+            Logger.Logger.LogStep("Navigate to SentPage");
             NavigationMenu navigationMenu = new NavigationMenu();
             SentPage sentPage = navigationMenu.NavigateToSent();
 
-            //Verify, that the mail presents in ‘Sent’ folder. 
+            Logger.Logger.LogStep("Verify, that the mail presents in ‘Sent’ folder.");
             sentPage.WaitForEmailinSentFolder(subject);
 
             //Delete the mail from Sent folder
             //sentPage.DeleteEmail(subject);
 
-            //Delete email dragging to the trash bin
+            Logger.Logger.LogStep("Delete email dragging to the trash bin");
             sentPage.DragEmailToTrashBin(subject);
 
-            //Navigate to recycle bin
+            Logger.Logger.LogStep("Navigate to recycle bin");
             RecycleBinPage recyclePage = navigationMenu.NavigateToRecycle();
 
-            //Verify, that the mail presents in ‘Recycle bin’ folder. 
+            Logger.Logger.LogStep("Verify, that the mail presents in ‘Recycle bin’ folder.");
             recyclePage.WaitForDeletedEmail(subject);
         }
 
@@ -117,22 +117,16 @@
 
             string expectedValidationMessage = "Неверное имя или пароль";
 
-            //Login to the mail.ru with invalid password
+            Logger.Logger.LogStep("Login to the mail.ru with invalid password");
             HomePage homePage = new HomePage();
             homePage.Login(invalidUser);
 
-            //Verify, that red text message appears
+            Logger.Logger.LogStep("Verify, that red text message appears");
             homePage.WaitForValidationMessage(expectedValidationMessage);
 
-            //Login to the mail.ru 
+            Logger.Logger.LogStep("Login to the mail.ru");
             homePage.Login(user);
         }
 
-        [TestMethod]
-        public void Test()
-        {
-            Log.Info("Test!");
-           
-        }
     }
 }

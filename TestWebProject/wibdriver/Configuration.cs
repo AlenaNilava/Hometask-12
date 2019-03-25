@@ -8,7 +8,7 @@
 			return ConfigurationManager.AppSettings[var] ?? defaultValue;
 		}
 
-		public static string ElementTimeout => GetEnviromentVar("ElementTimeout", "10");
+		public static string ElementTimeout => GetEnviromentVar("ElementTimeout", "30");
 
 		public static string Browser => GetEnviromentVar("Browser", "Chrome");
 
